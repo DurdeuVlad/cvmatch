@@ -7,15 +7,32 @@ import com.google.gson.JsonObject;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIf;
 
 import java.util.List;
 
+@EnabledIf("isApiConfigAvailable")
 class GenerativeLanguageClientIntegrationTest {
 
     private static GenerativeLanguageClient glClient;
     private static String apiKey;
     private static String modelId;
     private static String modelEmbeddedId;
+
+    static boolean isApiConfigAvailable() {
+        Dotenv dotenv = Dotenv.configure()
+                .directory("src/main/resources")
+                .ignoreIfMalformed()
+                .ignoreIfMissing()
+                .load();
+        return hasValue(dotenv.get("GEMINI_API_KEY"))
+                && hasValue(dotenv.get("GEMINI_MODEL_ID"))
+                && hasValue(dotenv.get("GEMINI_EMBED_MODEL_ID"));
+    }
+
+    private static boolean hasValue(String value) {
+        return value != null && !value.isBlank();
+    }
 
     @BeforeAll
     static void init() {
@@ -27,7 +44,7 @@ class GenerativeLanguageClientIntegrationTest {
                 .load();
         apiKey  = dotenv.get("GEMINI_API_KEY");
         modelId = dotenv.get("GEMINI_MODEL_ID");
-        modelEmbeddedId = dotenv.get("GEMINI_MODEL_EMBEDDED_ID");
+        modelEmbeddedId = dotenv.get("GEMINI_EMBED_MODEL_ID");
 
         assertNotNull(apiKey,  "GEMINI_API_KEY must be set");
         assertFalse(apiKey.isBlank(), "GEMINI_API_KEY must not be blank");
