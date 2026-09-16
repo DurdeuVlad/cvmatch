@@ -1,38 +1,18 @@
-﻿# Root
-*.log
-.DS_Store
+node_modules/
+dist/
+build/
 .env
-.env.local
-
-# Ignore node_modules and build artifacts in frontend
-/frontend/node_modules
-/frontend/dist
-/frontend/.vite
-/frontend/.env
-/frontend/.env.*.local
-
-# Ignore IDE/editor configs (optional, but common)
-.vscode/
+.env.*
+!.env.example
+backend/env
+backend/src/main/resources/env
+backend/target/
+frontend/.vite/
+*.log
 .idea/
-*.iml
+.vscode/
 
-# Ignore OS-specific junk
-Thumbs.db
-
-# Backend (Spring Boot - Java)
-/backend/target/
-/backend/.classpath
-/backend/.project
-/backend/.settings/
-/backend/.env
-/backend/.env.*.local
-/backend/*.log
-
-# Optional: ignore test coverage reports
-/frontend/coverage
-/backend/coverage
-
-# Optional: ignore local database/data files
-/backend/data/
-/backend/src/main/resources/firebase/serviceAccountKey.json
-/backend/src/test/resources/.env
+# Local CVs, job descriptions, exports, and service-account material must not be committed.
+backend/src/test/resources/cvs/
+backend/src/test/resources/jobDescription/
+backend/jobDescriptionCache/
